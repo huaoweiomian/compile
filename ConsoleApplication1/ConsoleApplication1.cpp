@@ -123,7 +123,7 @@ int proc_S(struct S_Attr *S) {
 		match(THEN);
 		proc_S(&S1);
 		if (lookhead != ELSE) {////////////////////////////               S->IF C THEN S1
-			sprintf(S->code, "\n\t%s\nL%d:\t%s", C.code, C.atrue, S1.code);
+			sprintf(S->code, "%s\nL%d:\t%s", C.code, C.atrue, S1.code);
 			return 1;
 		}
 		/////////////////////////////////////////////////   S-> IF C THEN S2 ELSE S3
@@ -139,7 +139,7 @@ int proc_S(struct S_Attr *S) {
 		proc_S(&S2);
 		match(ELSE);
 		proc_S(&S3);
-		sprintf(S->code, "\n\t%s\nL%d:\t%s\nL%d:\t%s", C.code, C.atrue, S2.code, C.afalse, S3.code);
+		sprintf(S->code, "%s\nL%d:\t%s\nL%d:\t%s", C.code, C.atrue, S2.code, C.afalse, S3.code);
 		return 1;
 	case WHILE://////////////////// S-> WHILE C DO S1
 		match(WHILE);
