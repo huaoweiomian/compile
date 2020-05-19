@@ -265,7 +265,7 @@ int proc_T(struct T_Attr *T) {
 			strcpy(T->place, newTemp());
 			if (strlen(F1.code)== 0&&strlen( F2.code)==0)
 			{
-				sprintf(T->code, "%s%s\n\t%s = %s * %s", F1.code, F2.code, T->place, F1.place, F2.place);
+				sprintf(T->code, "%s = %s * %s",  T->place, F1.place, F2.place);
 			} 
 			else
 			{
