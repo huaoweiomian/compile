@@ -110,7 +110,15 @@ int proc_S(struct S_Attr *S) {
 		strcpy(tempidn, attr);
 		match(EQ);
 		proc_E(&E);
-		sprintf(S->code, "%s\n\t%s=%s", E.code, tempidn, E.place);
+		if (strlen(E.code) == 0)
+		{
+			sprintf(S->code, "%s = %s", tempidn, E.place);
+		} 
+		else
+		{
+			sprintf(S->code, "%s\n\t%s = %s", E.code, tempidn, E.place);
+		}
+		
 
 		return 1;
 	case IF:
@@ -168,11 +176,11 @@ int proc_C(struct C_Attr *C) {
 		proc_E(&E2);
 		if (strlen(E1.code) == 0&& strlen( E2.code ) ==0)
 		{
-			sprintf(C->code, "if %s>%s goto L%d\n\tgoto L%d", E1.place, E2.place, C->atrue, C->afalse);
+			sprintf(C->code, "if %s > %s goto L%d\n\tgoto L%d", E1.place, E2.place, C->atrue, C->afalse);
 		} 
 		else
 		{
-			sprintf(C->code, "%s%s\n\tif %s>%s goto L%d\n\tgoto L%d", E1.code, E2.code, E1.place, E2.place, C->atrue, C->afalse);
+			sprintf(C->code, "%s%s\n\tif %s > %s goto L%d\n\tgoto L%d", E1.code, E2.code, E1.place, E2.place, C->atrue, C->afalse);
 		}
 		return 1;
 	case LT:///////////C->E1<E2
@@ -180,11 +188,11 @@ int proc_C(struct C_Attr *C) {
 		proc_E(&E2);
 		if (strlen(E1.code) == 0 && strlen(E2.code) == 0)
 		{
-			sprintf(C->code, "if %s<%s goto L%d\n\tgoto L%d", E1.place, E2.place, C->atrue, C->afalse);
+			sprintf(C->code, "if %s < %s goto L%d\n\tgoto L%d", E1.place, E2.place, C->atrue, C->afalse);
 		}
 		else
 		{
-			sprintf(C->code, "%s%s\n\tif %s<%s goto L%d\n\tgoto L%d", E1.code, E2.code, E1.place, E2.place, C->atrue, C->afalse);
+			sprintf(C->code, "%s%s\n\tif %s < %s goto L%d\n\tgoto L%d", E1.code, E2.code, E1.place, E2.place, C->atrue, C->afalse);
 		}
 		return 1;
 	case EQ:///////////C->E1=E2
@@ -192,11 +200,11 @@ int proc_C(struct C_Attr *C) {
 		proc_E(&E2);
 		if (strlen(E1.code) == 0 && strlen(E2.code) == 0)
 		{
-			sprintf(C->code, "if %s=%s goto L%d\n\tgoto L%d", E1.place, E2.place, C->atrue, C->afalse);
+			sprintf(C->code, "if %s = %s goto L%d\n\tgoto L%d", E1.place, E2.place, C->atrue, C->afalse);
 		}
 		else
 		{
-			sprintf(C->code, "%s%s\n\tif %s=%s goto L%d\n\tgoto L%d", E1.code, E2.code, E1.place, E2.place, C->atrue, C->afalse);
+			sprintf(C->code, "%s%s\n\tif %s = %s goto L%d\n\tgoto L%d", E1.code, E2.code, E1.place, E2.place, C->atrue, C->afalse);
 		}
 		return 1;
 	default:
@@ -452,7 +460,7 @@ int main() {
 	char resourceProject[10000];
 	int sta = 0;//源程序指针
 	FILE *fp, *fp1;
-	if ((fp = fopen("F:/workspace/compile/test.txt", "r")) == NULL)
+	if ((fp = fopen("test.txt", "r")) == NULL)
 	{//打开源程序
 		cout << "can't open this file";
 		exit(0);
@@ -472,17 +480,17 @@ int main() {
 	struct S_Attr S;
 	//printf("Input the string:\n");
 	//gets(str);
-	//    strcpy(str,"if a=1 then x=1+2+3");
+	//   strcpy(str,"if a=1 then x=1+2+3");
 	//    strcpy(str,"while(a3+15)>0xa do if x2=07 then while y<z do y=x*y/z");
 	//    printf("while(a3+15)>0xa do if x2=07 then while y<z do y=x*y/z");
-	//strcpy(str,"if a<1 then a=1 else a=0");
+	strcpy(str,"if a<1 then a=1 else a=0");
 	//strcpy(str,"while a<1 do a=1");
 	//strcpy(str,"if x2=07 then a=1");
 	//    strcpy(str,"a=3");
 	lookhead = scan(str);
 	S.next = Snext;
 	proc_S(&S);
-	fp1 = fopen("F:/workspace/compile/out.txt", "w");
+	fp1 = fopen("out.txt", "w");
 	fprintf(fp1, S.code);
 	fclose(fp1);
 	printf("%s", S.code);
