@@ -483,7 +483,7 @@ int main() {
 	//   strcpy(str,"if a=1 then x=1+2+3");
 	//    strcpy(str,"while(a3+15)>0xa do if x2=07 then while y<z do y=x*y/z");
 	//    printf("while(a3+15)>0xa do if x2=07 then while y<z do y=x*y/z");
-	strcpy(str,"if a<1 then a=1 else a=0");
+	//strcpy(str,"if a<1 then a=1 else a=0");
 	//strcpy(str,"while a<1 do a=1");
 	//strcpy(str,"if x2=07 then a=1");
 	//    strcpy(str,"a=3");
