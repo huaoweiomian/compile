@@ -4,6 +4,7 @@
 #include<ctype.h>
 #include <iostream>
 #include <fstream>
+#include <string>
 using namespace std;
 
 #define IDN 0
@@ -484,7 +485,18 @@ int main() {
 	proc_S(&S);
 	fp1 = fopen("F:/workspace/compile/out.txt", "w");
 	fprintf(fp1, S.code);
+	string last = str;
+	
+	size_t indx = last.find("print");
+	if (indx != string::npos) {
+		last = last.substr(indx, last.size() - indx - 1);
+		last = string("\n") + last;
+		fprintf(fp1,last.c_str());
+	}
 	fclose(fp1);
 	printf("%s", S.code);
+	if (indx != string::npos) {
+		printf("%s",last.c_str());
+	}
 	return 0;
 }
